@@ -14,5 +14,4 @@ return array(
         'requestExpire' => 180,
         'apiKey' => 'J**823DIsw>.koa4;.ks.',
     ),
-    'test' => FALSE,
 );
