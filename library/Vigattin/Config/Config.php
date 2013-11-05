@@ -1,10 +1,6 @@
 <?php
 namespace Vigattin\Config;
 
-/**
- * 
- */
-
 class Config {
     
     const DEFAULT_CONFIG_FILE = '../../../config/config.php';
