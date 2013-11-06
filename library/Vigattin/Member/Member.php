@@ -170,7 +170,7 @@ class Member {
      * @return array result of the request
      */
     
-    public function dbCreateMember($email, $password, $first_name, $last_name, $gender, $birthday = '', $verified = 0, $version = 0) {
+    public function dbCreateMember($email, $password, $first_name, $last_name, $gender, $birthday = '', $verified = 0, $version = 0, $username = '') {
         $request = array(
             'mode' => Connect::REQUEST_MODE_DB_CREATE_MEMBERS,
             'email' => $email,
@@ -181,7 +181,7 @@ class Member {
             'birthday' => $birthday,
             'verified' => $verified,
             'version' => $version,
-            'username' => ''
+            'username' => $username
         );
         $result_data = $this->connect->apiCall($request);
         return json_decode($result_data, true);
