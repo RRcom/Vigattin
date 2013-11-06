@@ -6,12 +6,22 @@ return array(
     ),
     'connect' => array(
         'apiUrl' => '',
-        'sslCheckCertificate' => TRUE,
+        'sslCheckCertificate' => FALSE,
         'authDomainLoginUrl' => '',
         'authDomainSecureLoginUrl' => '',
         'authDomainLogoutUrl' => '',
         'authDomainSecureLogoutUrl' => '',
+        'authDomainFbLoginUrl' => '',
+        'authDomainSecureFbLoginUrl' => '',
+        'imageServer' => '',
         'requestExpire' => 180,
         'apiKey' => '',
+    ),
+    'session' => array(
+        'cookieDomain' => '',
+        'cookieName' => '',
+        'cookieExpire' => 0,
+        'encriptCookie' => TRUE,
+        'encriptKey' => '',
     ),
 );

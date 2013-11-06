@@ -25,6 +25,12 @@ class Auth {
         else return $this->config->config['connect']['authDomainLoginUrl'].'?redirect='.urlencode(urldecode($redirect));
     }
     
+    public function getFbLoginUrl($redirect = '', $secure = FALSE) {
+        if($redirect === '') $redirect = URLtools::getCurrentUrl();
+        if($secure) return $this->config->config['connect']['authDomainSecureFbLoginUrl'].'?redirect='.urlencode(urldecode($redirect));
+        else return $this->config->config['connect']['authDomainFbLoginUrl'].'?redirect='.urlencode(urldecode($redirect));
+    }
+    
     public function getlogoutUrl($redirect = '', $secure = FALSE) {
         if($redirect === '') $redirect = URLtools::getCurrentUrl();
         if($secure) return $this->config->config['connect']['authDomainSecureLogoutUrl'].'?redirect='.urlencode(urldecode($redirect));
