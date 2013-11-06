@@ -7,7 +7,8 @@ class Member {
     
     public $connect;
     
-    public function __construct() {
+    public function __construct(\Vigattin\Connect\Connect $connect = NULL) {
+        if(is_object($connect)) $this->connect = $connect;
         $this->connect = new Connect();
     }
     

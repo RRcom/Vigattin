@@ -1,0 +1,1 @@
+C:/xampp/htdocs/test2/vendor/bin/phpunit --stderr --bootstrap tests/bootstrap.php tests/testMember.php

@@ -31,8 +31,9 @@ class Connect {
     )
      */
     
-    public function __construct() {
-        $this->config = new Config();
+    public function __construct(\Vigattin\Config\Config $config = NULL) {
+        if(is_object($config)) $this->config = $config;
+        else $this->config = new Config();
     }
     
     public function apiCall($request = array()) {
@@ -61,4 +62,5 @@ class Connect {
         curl_close($ch);
         return $result;
     }
+    
 }
