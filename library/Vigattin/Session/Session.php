@@ -15,6 +15,12 @@ class Session {
         $this->initSession();
     }
     
+    /**
+     * Add or set a session data
+     * @param string|array $key keyname of data to be stored in a session or array of key value paire data
+     * @param mixed $value the value of a key if key is string or null if key is array
+     */
+    
     public function setSessionData($key, $value = '') {
         if(is_array($key)) {
             $this->session = array_merge($this->session, $key);
@@ -23,10 +29,20 @@ class Session {
         $this->updateCookie();
     }
     
+    /**
+     * Get data from session
+     * @param string $key the name or key of value to fetch
+     * @return mixed
+     */
+    
     public function getSessiondata($key) {
         if(!empty($this->session[$key])) return $this->session[$key];
         return '';
     }
+    
+    /**
+     * Update cookie string from session array
+     */
     
     public function updateCookie() {
         $value = serialize($this->session);
@@ -44,6 +60,10 @@ class Session {
        
         //setcookie($this->config->config['session']['cookieName'], $value, $this->config->config['session']['cookieExpire'], '/');
     }
+    
+    /**
+     * Update session array from cookie string
+     */
     
     public function initSession() {
         $cookie = '';
