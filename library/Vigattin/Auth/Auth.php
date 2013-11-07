@@ -3,7 +3,7 @@ namespace Vigattin\Auth;
 
 use Vigattin\Session\Session;
 use Vigattin\Config\Config;
-use Vigattin\URLtools\URLtools;
+use Vigattin\URLTools\URLTools;
 
 class Auth {
     
@@ -40,7 +40,7 @@ class Auth {
      */
     
     public function getFbLoginUrl($redirect = '', $secure = FALSE) {
-        if($redirect === '') $redirect = URLtools::getCurrentUrl();
+        if($redirect === '') $redirect = URLTools::getCurrentUrl();
         if($secure) return $this->config->config['connect']['authDomainSecureFbLoginUrl'].'?redirect='.urlencode(urldecode($redirect));
         else return $this->config->config['connect']['authDomainFbLoginUrl'].'?redirect='.urlencode(urldecode($redirect));
     }
@@ -53,7 +53,7 @@ class Auth {
      */
     
     public function getlogoutUrl($redirect = '', $secure = FALSE) {
-        if($redirect === '') $redirect = URLtools::getCurrentUrl();
+        if($redirect === '') $redirect = URLTools::getCurrentUrl();
         if($secure) return $this->config->config['connect']['authDomainSecureLogoutUrl'].'?redirect='.urlencode(urldecode($redirect));
         else return $this->config->config['connect']['authDomainLogoutUrl'].'?redirect='.urlencode(urldecode($redirect));
     }

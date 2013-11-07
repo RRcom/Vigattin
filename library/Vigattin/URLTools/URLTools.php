@@ -1,7 +1,7 @@
 <?php
-namespace Vigattin\URLtools;
+namespace Vigattin\URLTools;
 
-class URLtools {
+class URLTools {
     
     static public function getCurrentUrl() {
         $pageURL = 'http';
