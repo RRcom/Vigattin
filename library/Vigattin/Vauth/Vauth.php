@@ -1,4 +1,6 @@
-<?php // vauth client v1.0-beta.1
+<?php 
+namespace Vigattin\Vauth;
+// vauth client v1.0-beta.1
 
 use Vigattin\Auth\Auth;
 use Vigattin\Coupon\Coupon;
