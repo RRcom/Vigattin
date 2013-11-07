@@ -27,7 +27,7 @@ class Auth {
      */
     
     public function getLoginUrl($redirect = '', $secure = FALSE) {
-        if($redirect === '') $redirect = URLtools::getCurrentUrl();
+        if($redirect === '') $redirect = URLTools::getCurrentUrl();
         if($secure) return $this->config->config['connect']['authDomainSecureLoginUrl'].'?redirect='.urlencode(urldecode($redirect));
         else return $this->config->config['connect']['authDomainLoginUrl'].'?redirect='.urlencode(urldecode($redirect));
     }
