@@ -24,4 +24,13 @@ return array(
         'encriptCookie' => TRUE,
         'encriptKey' => '',
     ),
+    'doctrine' => array(
+        'connection' => array(
+            'driver'   => 'pdo_mysql',
+            'host'     => 'localhost',
+            'dbname'   => '',
+            'user'     => '',
+            'password' => '',
+        ),
+    ),
 );

@@ -20,7 +20,8 @@
     },
     "autoload": {
         "psr-0": {
-            "Vigattin\\": "library/"
+            "Vigattin\\": "library/",
+            "Vigattin\\Entity\\": "entity/"
         }
     }
 }
