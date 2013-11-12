@@ -32,5 +32,6 @@ return array(
             'user'     => '',
             'password' => '',
         ),
+        'isDevmode' => FALSE,
     ),
 );

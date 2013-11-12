@@ -9,7 +9,7 @@ class Config {
     
     public function __construct($config = '') {
         $this->config = array();
-        if($config === '') $config = include __DIR__.'/'.self::DEFAULT_CONFIG_FILE;
+        if($config === '') $config = $this->getConfigFromFile();
         if(is_array($config)) $this->mergeConfigArray($config);
         elseif(is_file($config)) $this->mergeConfigFile ($config);
     }
@@ -31,5 +31,8 @@ class Config {
         return $this->config;
     }
     
+    static function getConfigFromFile() {
+        return include __DIR__.'/'.self::DEFAULT_CONFIG_FILE;
+    }
 }
 
