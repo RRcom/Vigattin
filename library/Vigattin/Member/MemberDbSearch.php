@@ -5,7 +5,10 @@ use Doctrine\ORM\NoResultException;
 use Vigattin\Connect\DoctrineConnect;
 
 class MemberDbSearch {
-    
+
+    const ORDER_BY_ASD = 0;
+    const ORDER_BY_DESC = 1;
+
     protected $entityManager;
     
     public function __construct() {
@@ -37,14 +40,15 @@ class MemberDbSearch {
         return $result;
     }
 
-    public function searchMember($name, $start = 0, $limit = 30, $includeNewuser = TRUE) {
+    public function searchMember($name, $start = 0, $limit = 30, $includeNewuser = TRUE, $includeNoProfilePhoto = TRUE, $resultOrder = self::ORDER_BY_DESC) {
+        $newUser = ($includeNewuser) ? "(m.new_user = '' OR m.new_user = 0 OR m.new_user = 1)" : "(m.new_user = '' OR m.new_user = 0)";
+        $profilePhoto = ($includeNoProfilePhoto) ? "(m.profile_photo != '' OR m.profile_photo = '')" : "(m.profile_photo != '')";
+        $orderBy = ($resultOrder) ? "DESC": "ASC";
         if(empty($name)) {
-            if((bool)$includeNewuser) $query = $this->entityManager->createQuery("SELECT m FROM Vigattin\Entity\Members m WHERE m.new_user = 1 ORDER BY m.id DESC");
-            else $query = $this->entityManager->createQuery("SELECT m FROM Vigattin\Entity\Members m WHERE m.new_user = 0 ORDER BY m.id DESC");
+            $query = $this->entityManager->createQuery("SELECT m FROM Vigattin\Entity\Members m WHERE $newUser AND $profilePhoto ORDER BY m.id $orderBy");
         }
         else {
-            if((bool)$includeNewuser) $query = $this->entityManager->createQuery("SELECT m FROM Vigattin\Entity\Members m WHERE m.name LIKE :name AND m.new_user = 1 ORDER BY m.id DESC");
-            else $query = $this->entityManager->createQuery("SELECT m FROM Vigattin\Entity\Members m WHERE m.name LIKE :name AND m.new_user = 0 ORDER BY m.id DESC");
+            $query = $this->entityManager->createQuery("SELECT m FROM Vigattin\Entity\Members m WHERE m.name LIKE :name AND $newUser AND $profilePhoto ORDER BY m.id $orderBy");
             $query->setParameter('name', "%$name%");
         }
         $query->setFirstResult((int)$start);
@@ -57,14 +61,14 @@ class MemberDbSearch {
         return $result;
     }
 
-    public function searchMemberTotalCount($name, $includeNewuser = TRUE) {
+    public function searchMemberTotalCount($name, $includeNewuser = TRUE, $includeNoProfilePhoto = TRUE) {
+        $newUser = ($includeNewuser) ? "(m.new_user = '' OR m.new_user = 0 OR m.new_user = 1)" : "(m.new_user = '' OR m.new_user = 0)";
+        $profilePhoto = ($includeNoProfilePhoto) ? "(m.profile_photo != '' OR m.profile_photo = '')" : "(m.profile_photo != '')";
         if(empty($name)) {
-            if((bool)$includeNewuser) $query = $this->entityManager->createQuery("SELECT COUNT(m.id) FROM Vigattin\Entity\Members m");
-            else $query = $this->entityManager->createQuery("SELECT COUNT(m.id) FROM Vigattin\Entity\Members m WHERE m.new_user != 1");
+            $query = $this->entityManager->createQuery("SELECT COUNT(m.id) FROM Vigattin\Entity\Members m WHERE $newUser AND $profilePhoto");
         }
         else {
-            if((bool)$includeNewuser) $query = $this->entityManager->createQuery("SELECT COUNT(m.id) FROM Vigattin\Entity\Members m WHERE m.name LIKE :name");
-            else $query = $this->entityManager->createQuery("SELECT COUNT(m.id) FROM Vigattin\Entity\Members m WHERE m.name LIKE :name AND m.new_user != 1");
+            $query = $this->entityManager->createQuery("SELECT COUNT(m.id) FROM Vigattin\Entity\Members m WHERE m.name LIKE :name AND $newUser AND $profilePhoto");
             $query->setParameter('name', "%$name%");
         }
         try {
