@@ -74,4 +74,5 @@ class MemberDbSearch {
         }
         return $result;
     }
+
 }
