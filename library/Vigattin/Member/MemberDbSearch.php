@@ -1,9 +1,7 @@
 <?php
 namespace Vigattin\Member;
 
-use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\NoResultException;
-use Vigattin\Entity\Members;
 use Vigattin\Connect\DoctrineConnect;
 
 class MemberDbSearch {
@@ -30,15 +28,15 @@ class MemberDbSearch {
             $query = $this->entityManager->createQuery("SELECT m FROM Vigattin\Entity\Members m WHERE m.id = :id");
             $query->setParameter('id', $emailOrID);
         }
-        
+
         try {
-            $result = $query->getSingleResult();
+            $result = $query->getSingleResult($query::HYDRATE_ARRAY);
         } catch (NoResultException $ex) {
             $result = FALSE;
         }
         return $result;
     }
-    
+
     public function searchMember($name, $start = 0, $limit = 30, $includeNewuser = TRUE) {
         if(empty($name)) {
             if((bool)$includeNewuser) $query = $this->entityManager->createQuery("SELECT m FROM Vigattin\Entity\Members m WHERE m.new_user = 1");
@@ -52,13 +50,13 @@ class MemberDbSearch {
         $query->setFirstResult((int)$start);
         $query->setMaxResults((int)$limit);
         try {
-            $result = $query->getResult();
+            $result = $query->getResult($query::HYDRATE_ARRAY);
         } catch (NoResultException $ex) {
             $result = array();
         }
         return $result;
     }
-    
+
     public function searchMemberTotalCount($name, $includeNewuser = TRUE) {
         if(empty($name)) {
             if((bool)$includeNewuser) $query = $this->entityManager->createQuery("SELECT COUNT(m.id) FROM Vigattin\Entity\Members m");

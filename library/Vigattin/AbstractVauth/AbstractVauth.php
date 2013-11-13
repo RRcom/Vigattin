@@ -601,12 +601,6 @@ abstract class AbstractVauth {
         return $this->member->dbCreateMember($email, $password, $first_name, $last_name, $gender, $birthday, $verified, $version, $username);
     }
     
-    // ####################### tools ###########################################
-    
-    public static function build_object() {
-        return new self();
-    }
-    
     // ################## old api ##############################################
     
     public function login($redirect = '', $secure = FALSE) {
