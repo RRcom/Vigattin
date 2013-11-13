@@ -39,12 +39,12 @@ class MemberDbSearch {
 
     public function searchMember($name, $start = 0, $limit = 30, $includeNewuser = TRUE) {
         if(empty($name)) {
-            if((bool)$includeNewuser) $query = $this->entityManager->createQuery("SELECT m FROM Vigattin\Entity\Members m WHERE m.new_user = 1");
-            else $query = $this->entityManager->createQuery("SELECT m FROM Vigattin\Entity\Members m WHERE m.new_user = 0");
+            if((bool)$includeNewuser) $query = $this->entityManager->createQuery("SELECT m FROM Vigattin\Entity\Members m WHERE m.new_user = 1 ORDER BY m.id DESC");
+            else $query = $this->entityManager->createQuery("SELECT m FROM Vigattin\Entity\Members m WHERE m.new_user = 0 ORDER BY m.id DESC");
         }
         else {
-            if((bool)$includeNewuser) $query = $this->entityManager->createQuery("SELECT m FROM Vigattin\Entity\Members m WHERE m.name LIKE :name AND m.new_user = 1");
-            else $query = $this->entityManager->createQuery("SELECT m FROM Vigattin\Entity\Members m WHERE m.name LIKE :name AND m.new_user = 0");
+            if((bool)$includeNewuser) $query = $this->entityManager->createQuery("SELECT m FROM Vigattin\Entity\Members m WHERE m.name LIKE :name AND m.new_user = 1 ORDER BY m.id DESC");
+            else $query = $this->entityManager->createQuery("SELECT m FROM Vigattin\Entity\Members m WHERE m.name LIKE :name AND m.new_user = 0 ORDER BY m.id DESC");
             $query->setParameter('name', "%$name%");
         }
         $query->setFirstResult((int)$start);
