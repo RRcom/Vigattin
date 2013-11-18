@@ -7,11 +7,11 @@ class Config {
 
     public $config;
     
-    public function __construct($config = '') {
+    public function __construct(Array $config = NULL) {
         $this->config = array();
-        if($config === '') $config = $this->getConfigFromFile();
+        if($config === NULL) $config = $this->getConfigFromFile();
         if(is_array($config)) $this->mergeConfigArray($config);
-        elseif(is_file($config)) $this->mergeConfigFile ($config);
+        elseif(is_file($config)) $this->mergeConfigFile($config);
     }
     
     public function mergeConfigArray($configArray) {
@@ -27,12 +27,21 @@ class Config {
         return $config;
     }
     
-    public function getConfig() {
-        return $this->config;
+    public function getConfig($key = '') {
+        if($key === '') return $this->config;
+        if(!empty($this->config[$key])) return $this->config[$key];
+        return FALSE;
+
     }
     
-    static function getConfigFromFile() {
-        return include __DIR__.'/'.self::DEFAULT_CONFIG_FILE;
+    static function getConfigFromFile($key = '') {
+        if(!is_file(__DIR__.'/'.self::DEFAULT_CONFIG_FILE)) return FALSE;
+        $config = include __DIR__.'/'.self::DEFAULT_CONFIG_FILE;
+        if(!is_array($config)) return FALSE;
+        if($key === '') return $config;
+        if(!empty($config[$key])) return $config[$key];
+        return FALSE;
+
     }
 }
 

@@ -34,4 +34,11 @@ return array(
         ),
         'isDevmode' => FALSE,
     ),
+    'communicate' => array(
+        'remoteUrl' => '',
+        'password' => '',
+        'useSecureConnection' => FALSE,
+        'checkCertificate' => FALSE,
+        'expiryLife' => 180,
+    ),
 );
