@@ -9,6 +9,7 @@ class Communicate {
     const CURL_CLIENT_NAME = 'vigattin_communicate';
 
     public $config;
+    protected $callableClassArray = array();
 
     public function __construct($config = NULL) {
         $this->config = $this->getDefaultConfig();
@@ -69,6 +70,11 @@ class Communicate {
 
     public function getConfig() {
         return $this->config;
+    }
+
+    public function registerOnCatchListener($callableClass, $messageName) {
+        if(!is_string($callableClass)) return FALSE;
+        $this->callableClassArray[] = array('class' => $callableClass, 'name' => $messageName);
     }
 
 }
