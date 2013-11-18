@@ -29,7 +29,7 @@ class Communicate {
             CURLOPT_URL             => $this->config['remoteUrl'],
             CURLOPT_POST            => true,
             CURLOPT_RETURNTRANSFER  => true,
-            CURLOPT_POSTFIELDS      => array('package' => $encrypted),
+            CURLOPT_POSTFIELDS      => array('package' => base64_encode($encrypted)),
             CURLOPT_FOLLOWLOCATION => true,
             CURLOPT_USERAGENT      => self::CURL_CLIENT_NAME,
             CURLOPT_AUTOREFERER    => true,
@@ -47,7 +47,13 @@ class Communicate {
     }
 
     public function catchMessage() {
-
+        if(empty($_POST['package'])) return FALSE;
+        $package = base64_decode($_POST['package'], TRUE);
+        $package = Cription::decript($package, $this->config['password'], $this->config['salt']);
+        if(!$package) return FALSE;
+        $package = unserialize($package);
+        if(!is_array($package)) return FALSE;
+        return $package;
     }
 
     public function getDefaultConfig() {
