@@ -81,16 +81,28 @@ class Communicate {
     public function triggerEvent($package) {
         foreach($this->callableClassArray as $callable) {
             if($callable['name'] == $package['name']) {
-                $implements = class_implements($callable['class']);
-                if(isset($implements['Vigattin\Communicate\MessageInterface'])) {
-                    $message = new $callable['class'].'()';
-                    $message->setStatus('ok');
-                    $message->setReason('');
-                    $message->setMessage($message);
-                    $message->onRecieved();
+                if(class_exists($callable['class'])) {
+                    $implements = class_implements($callable['class']);
+                    if(isset($implements['Vigattin\Communicate\MessageInterface'])) {
+                        $class = $callable['class'];
+                        $message = new $class();
+                        $status = $this->checkPackage($package);
+                        $message->setStatus($status);
+                        $message->setReason('');
+                        if($status == 'ok') $message->setMessage($package['data']);
+                        else $message->setMessage(array());
+                        $message->onReceived();
+                    }
                 }
             }
         }
+    }
+
+    public function checkPackage($package) {
+        $status = 'ok';
+        if(empty($package['expire'])) $status = 'no expiration found';
+        elseif(intval($package['expire']) < time()) $status = 'expired message';
+        return $status;
     }
 
 }
