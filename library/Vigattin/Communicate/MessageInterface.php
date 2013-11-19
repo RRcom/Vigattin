@@ -10,15 +10,20 @@ interface MessageInterface {
     /**
      * @param $message mixed The actual message from remote server.
      */
-    public function getMessage($message);
+    public function setMessage($message);
 
     /**
      * @param $status int Status code of the received message.
      */
-    public function getStatus($status);
+    public function setStatus($status);
 
     /**
      * @param $reason string Description if message has error.
      */
-    public function getReason($reason);
+    public function setReason($reason);
+
+    /**
+     * Trigger when message receiving is complete
+     */
+    public function onRecieved();
 }

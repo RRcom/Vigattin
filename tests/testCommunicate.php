@@ -1,5 +1,6 @@
 <?php
 use Vigattin\Communicate\Communicate;
+include __DIR__.'/SampleCommMessage.php';
 
 class ConfigTestCase extends PHPUnit_Framework_TestCase {
 
@@ -22,6 +23,19 @@ class ConfigTestCase extends PHPUnit_Framework_TestCase {
     public function testSendMessage() {
         $result = $this->communication->sendMessage(array('test1' => 'data1', 'test2' => 12345), 'test_message');
         //$this->assertEquals('ok', $result);
-        echo $result;
+        //echo $result;
+    }
+
+    public function testRegisterEvents() {
+        $this->communication->registerOnCatchListener('SampleCommMessage', 'test');
+    }
+
+    public function testTrigger() {
+        $package = array(
+            'name' => 'test',
+            'expire' => 1234,
+            'data' => array(12345),
+        );
+        $this->communication->triggerEvent($package);
     }
 }

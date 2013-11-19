@@ -54,6 +54,7 @@ class Communicate {
         if(!$package) return FALSE;
         $package = unserialize($package);
         if(!is_array($package)) return FALSE;
+        $this->triggerEvent($package);
         return $package;
     }
 
@@ -75,6 +76,21 @@ class Communicate {
     public function registerOnCatchListener($callableClass, $messageName) {
         if(!is_string($callableClass)) return FALSE;
         $this->callableClassArray[] = array('class' => $callableClass, 'name' => $messageName);
+    }
+
+    public function triggerEvent($package) {
+        foreach($this->callableClassArray as $callable) {
+            if($callable['name'] == $package['name']) {
+                $implements = class_implements($callable['class']);
+                if(isset($implements['Vigattin\Communicate\MessageInterface'])) {
+                    $message = new $callable['class'].'()';
+                    $message->setStatus('ok');
+                    $message->setReason('');
+                    $message->setMessage($message);
+                    $message->onRecieved();
+                }
+            }
+        }
     }
 
 }
