@@ -25,5 +25,5 @@ interface MessageInterface {
     /**
      * Trigger when message receiving is complete
      */
-    public function onRecieved();
+    public function onReceived();
 }
