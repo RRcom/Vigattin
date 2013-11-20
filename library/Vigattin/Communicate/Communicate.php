@@ -17,7 +17,8 @@ class Communicate {
         else $this->config = array_merge($this->config, Config::getConfigFromFile('communication'));
     }
 
-    public function sendMessage($data, $msgName) {
+    public function sendMessage($data, $msgName, $remoteUrl = '') {
+        if($remoteUrl === '') $remoteUrl = $this->config['remoteUrl'];
         $package = array(
             'data' => $data,
             'expire' => time()+$this->config['expiryLife'],
@@ -27,7 +28,7 @@ class Communicate {
         $encrypted = Cription::encript($serialized, $this->config['password'], $this->config['salt']);
         $ch = curl_init();
         $curlConfig = array(
-            CURLOPT_URL             => $this->config['remoteUrl'],
+            CURLOPT_URL             => $remoteUrl,
             CURLOPT_POST            => true,
             CURLOPT_RETURNTRANSFER  => true,
             CURLOPT_POSTFIELDS      => array('package' => base64_encode($encrypted)),
