@@ -1,5 +1,5 @@
 <?php 
-namespace Vigattin\AbstractVauth;
+namespace Vigattin\Vauth;
 // vauth client v1.0-beta.1
 
 use Vigattin\Auth\Auth;
@@ -8,7 +8,7 @@ use Vigattin\Photos\Photos;
 use Vigattin\Member\Member;
 
 
-abstract class AbstractVauth {
+class Vauth {
     
     protected $auth;
     protected $coupon;
