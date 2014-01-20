@@ -6,7 +6,7 @@ use Vigattin\Auth\Auth;
 use Vigattin\Coupon\Coupon;
 use Vigattin\Photos\Photos;
 use Vigattin\Member\Member;
-
+use Vigattin\Events\Events;
 
 class Vauth {
     
@@ -14,14 +14,20 @@ class Vauth {
     protected $coupon;
     protected $photos;
     protected $member;
+    /** @var Events */
+    protected $events;
 
     // initial
-    public function __construct() {
+    public function __construct(Events $events = null) {
+        if($events === null) $this->events = new Events();
+        else $this->events = $events;
         $this->auth = new Auth();
         
         // Catch vigattin login/logout request
         if($auth_data = $this->auth->catchServerRequest()) {
             if($auth_data !== FALSE) {
+                if(isset($auth_data['vauth_id'])) $this->events->trigger(Events::EVENT_SUCCESS_LOGIN, $this);
+                else $this->events->trigger(Events::EVENT_FAILED_LOGIN, $this);
                 print_r($auth_data);
                 exit();
             }
@@ -30,6 +36,7 @@ class Vauth {
         $this->coupon = new Coupon();
         $this->photos = new Photos();
         $this->member = new Member();
+        $this->events->trigger(Events::EVENT_VAUTH_CREATED, $this);
     }
     
     // ################## login-logout #########################################
