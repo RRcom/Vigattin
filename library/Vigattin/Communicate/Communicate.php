@@ -3,7 +3,12 @@ namespace Vigattin\Communicate;
 
 use Vigattin\Cription\Cription;
 use Vigattin\Config\Config;
+use Vigattin\Communicate\MessageInterface;
 
+/**
+ * Class Communicate
+ * @package Vigattin\Communicate
+ */
 class Communicate {
 
     const CURL_CLIENT_NAME = 'vigattin_communicate';
@@ -17,6 +22,13 @@ class Communicate {
         else $this->config = array_merge($this->config, Config::getConfigFromFile('communication'));
     }
 
+    /**
+     * Send message containing data to the receiver
+     * @param mixed $data the variable to send to the receiver recommended type array
+     * @param string $msgName if message name is update_user trigger will search for the class with the name update_trigger and run it
+     * @param string $remoteUrl the url where the the message listener are
+     * @return int|mixed if success return the sent package data back, else false
+     */
     public function sendMessage($data, $msgName, $remoteUrl = '') {
         if($remoteUrl === '') $remoteUrl = $this->config['remoteUrl'];
         $package = array(
@@ -48,6 +60,9 @@ class Communicate {
         return $result;
     }
 
+    /**
+     * @return bool|mixed|string catch post message and return the received data if success, else false
+     */
     public function catchMessage() {
         if(empty($_POST['package'])) return FALSE;
         $package = base64_decode($_POST['package'], TRUE);
@@ -59,6 +74,9 @@ class Communicate {
         return $package;
     }
 
+    /**
+     * @return array
+     */
     public function getDefaultConfig() {
         return array(
             'remoteUrl' => '',
@@ -70,15 +88,28 @@ class Communicate {
         );
     }
 
+    /**
+     * @return array
+     */
     public function getConfig() {
         return $this->config;
     }
 
-    public function registerOnCatchListener($callableClass, $messageName) {
+    /**
+     * Add message listener class to the event when message was received
+     * @param MessageInterface $callableClass the class to call when event happen
+     * @param string $messageName
+     * @return bool
+     */
+    public function registerOnCatchListener(MessageInterface $callableClass, $messageName) {
         if(!is_string($callableClass)) return FALSE;
         $this->callableClassArray[] = array('class' => $callableClass, 'name' => $messageName);
     }
 
+    /**
+     * Trigger the associate listener class based on message name
+     * @param array $package
+     */
     public function triggerEvent($package) {
         foreach($this->callableClassArray as $callable) {
             if($callable['name'] == $package['name']) {
@@ -99,6 +130,11 @@ class Communicate {
         }
     }
 
+    /**
+     * check if package is valid
+     * @param array $package
+     * @return string
+     */
     public function checkPackage($package) {
         $status = 'ok';
         if(empty($package['expire'])) $status = 'no expiration found';
