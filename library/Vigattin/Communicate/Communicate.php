@@ -97,11 +97,11 @@ class Communicate {
 
     /**
      * Add message listener class to the event when message was received
-     * @param MessageInterface $callableClass the class to call when event happen
+     * @param string $callableClass the class namespace (as string) to call when event happen
      * @param string $messageName
      * @return bool
      */
-    public function registerOnCatchListener(MessageInterface $callableClass, $messageName) {
+    public function registerOnCatchListener($callableClass, $messageName) {
         if(!is_string($callableClass)) return FALSE;
         $this->callableClassArray[] = array('class' => $callableClass, 'name' => $messageName);
     }
