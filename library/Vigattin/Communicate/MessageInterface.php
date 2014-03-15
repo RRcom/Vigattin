@@ -8,6 +8,11 @@ interface MessageInterface {
     const STATUS_HASH_INVALID = 2;
 
     /**
+     * @param mixed $dependencies
+     */
+    public function injectDependencies($dependencies);
+
+    /**
      * @param $message mixed The actual message from remote server.
      */
     public function setMessage($message);

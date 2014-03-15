@@ -99,11 +99,12 @@ class Communicate {
      * Add message listener class to the event when message was received
      * @param string $callableClass the class namespace (as string) to call when event happen
      * @param string $messageName
+     * @param mixed $dependencies inject dependencies eg. serviceManager, best way is to store multiple dependencies in array
      * @return bool
      */
-    public function registerOnCatchListener($callableClass, $messageName) {
+    public function registerOnCatchListener($callableClass, $messageName, $dependencies = null) {
         if(!is_string($callableClass)) return FALSE;
-        $this->callableClassArray[] = array('class' => $callableClass, 'name' => $messageName);
+        $this->callableClassArray[] = array('class' => $callableClass, 'name' => $messageName, 'dependencies' => $dependencies);
     }
 
     /**
@@ -119,6 +120,7 @@ class Communicate {
                         $class = $callable['class'];
                         $message = new $class();
                         $status = $this->checkPackage($package);
+                        $message->injectDependencies($callable['dependencies']);
                         $message->setStatus($status);
                         $message->setReason('');
                         if($status == 'ok') $message->setMessage($package['data']);
