@@ -70,7 +70,7 @@ class Communicate {
         if(!$package) return FALSE;
         $package = unserialize($package);
         if(!is_array($package)) return FALSE;
-        $this->triggerEvent($package);
+        $package = $this->triggerEvent($package);
         return $package;
     }
 
@@ -112,6 +112,7 @@ class Communicate {
      * @param array $package
      */
     public function triggerEvent($package) {
+        $package['response'] = array();
         foreach($this->callableClassArray as $callable) {
             if($callable['name'] == $package['name']) {
                 if(class_exists($callable['class'])) {
@@ -125,11 +126,15 @@ class Communicate {
                         $message->setReason('');
                         if($status == 'ok') $message->setMessage($package['data']);
                         else $message->setMessage(array());
-                        $message->onReceived();
+                        $response = $message->onReceived();
+                        if(is_array($response)) {
+                            $package['response'] = array_merge($package['response'], $response);
+                        }
                     }
                 }
             }
         }
+        return $package;
     }
 
     /**
