@@ -81,6 +81,7 @@ class Auth {
         }
         if((isset($_GET['logout'])) && ($_GET['logout'] ==  'user')) {
             $this->clearInfo();
+            return 'logout success';
         }
         return FALSE;
     }
