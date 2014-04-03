@@ -27,6 +27,7 @@ class Vauth {
         if($auth_data = $this->auth->catchServerRequest()) {
             if($auth_data !== FALSE) {
                 if(isset($auth_data['vauth_id'])) $this->events->trigger(Events::EVENT_SUCCESS_LOGIN, $this);
+                elseif($auth_data == 'logout success') $this->events->trigger(Events::EVENT_SUCCESS_LOGOUT, $this);
                 else $this->events->trigger(Events::EVENT_FAILED_LOGIN, $this);
                 print_r($auth_data);
                 exit();

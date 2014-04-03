@@ -9,6 +9,7 @@ class Events
     const EVENT_VAUTH_CREATED = 'vc';
     const EVENT_SUCCESS_LOGIN = 'sl';
     const EVENT_FAILED_LOGIN = 'fl';
+    const EVENT_SUCCESS_LOGOUT = 'so';
 
     /** @var array */
     protected $events;
