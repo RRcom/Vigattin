@@ -1,5 +1,5 @@
 <?php
-namespace Vigattin\Database\Interfaces;
+namespace Vigattin\Fotografia\Database\Interfaces;
 
 interface DatabaseInterface
 {
