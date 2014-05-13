@@ -1,5 +1,5 @@
 <?php
-namespace Vigattin\Fotografia\Admin\Classes;
+namespace Vigattin\Fotografia\Admin\ManageUserPhoto\Classes;
 
 use Vigattin\Fotografia\Admin\ManageUserPhoto\Interfaces\AdminManagePhotoInterface;
 use Vigattin\Fotografia\Database\Interfaces\DatabaseAwareInterface;
@@ -39,7 +39,7 @@ class AdminManageUserPhoto implements AdminManagePhotoInterface, DatabaseAwareIn
      */
     public function getInfo($imageId)
     {
-        // TODO: Implement getInfo() method.
+        return $this->database->query("SELECT * FROM `photo_box` WHERE `id` = ? LIMIT 1", array($imageId));
     }
 
     /**
