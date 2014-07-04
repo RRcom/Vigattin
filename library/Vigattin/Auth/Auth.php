@@ -21,8 +21,8 @@ class Auth {
     
     /**
      * Get vigattin login URL
-     * @param string $redirect where to redirect after successfull login
-     * @param bool $secure wether to use secure connection or not
+     * @param string $redirect where to redirect after successful login
+     * @param bool $secure whether to use secure connection or not
      * @return string the url with redirect for login
      */
     
@@ -34,8 +34,8 @@ class Auth {
     
     /**
      * Get vigattin FB login URL
-     * @param string $redirect where to redirect after successfull FB login
-     * @param bool $secure wether to use secure connection or not
+     * @param string $redirect where to redirect after successful FB login
+     * @param bool $secure whether to use secure connection or not
      * @return string the url with redirect for FB login
      */
     
@@ -48,7 +48,7 @@ class Auth {
     /**
      * Get vigattin logout URL
      * @param string $redirect where to redirect after successfull logout
-     * @param bool $secure wether to use secure connection or not
+     * @param bool $secure whether to use secure connection or not
      * @return string the url with redirect for logout
      */
     
