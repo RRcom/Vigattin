@@ -32,17 +32,18 @@ class Config {
         if($key === '') return $this->config;
         if(!empty($this->config[$key])) return $this->config[$key];
         return FALSE;
-
     }
     
     static function getConfigFromFile($key = '') {
-        if(!is_file(__DIR__.'/'.self::DEFAULT_CONFIG_FILE)) return FALSE;
-        $config = include __DIR__.'/'.self::DEFAULT_CONFIG_FILE;
+        if(!is_file(__DIR__.'/'.self::DEFAULT_CONFIG_FILE)) {
+			$config = include __DIR__.'/'.self::SAMPLE_CONFIG_FILE;
+		} else {
+			$config = include __DIR__.'/'.self::DEFAULT_CONFIG_FILE;
+		}
         if(!is_array($config)) return FALSE;
         if($key === '') return $config;
         if(!empty($config[$key])) return $config[$key];
         return FALSE;
-
     }
 }
 
