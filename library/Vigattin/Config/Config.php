@@ -3,6 +3,7 @@ namespace Vigattin\Config;
 
 class Config {
     
+	const SAMPLE_CONFIG_FILE = '../../../config/sample.config.php';
     const DEFAULT_CONFIG_FILE = '../../../config/config.php';
 
     public $config;
